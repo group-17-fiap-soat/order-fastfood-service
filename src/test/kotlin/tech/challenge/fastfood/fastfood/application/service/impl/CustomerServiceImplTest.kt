@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mockito.*
 import tech.challenge.fastfood.fastfood.common.exception.InvalidCustomerDataException
-import tech.challenge.fastfood.fastfood.common.interfaces.gateway.CustomerGatewayInterface
 import tech.challenge.fastfood.fastfood.entities.Customer
 import tech.challenge.fastfood.fastfood.usecases.customer.CreateCustomerUseCase
 import tech.challenge.fastfood.fastfood.usecases.customer.GetCustomerByCpfUseCase

@@ -2,21 +2,19 @@ package tech.challenge.fastfood.fastfood.usecases.order
 
 import org.apache.coyote.BadRequestException
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import tech.challenge.fastfood.fastfood.common.enums.OrderStatusEnum
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderGatewayInterface
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderItemGatewayInterface
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.ProductGatewayInterface
 import tech.challenge.fastfood.fastfood.entities.Order
 import tech.challenge.fastfood.fastfood.entities.OrderItem
-import tech.challenge.fastfood.fastfood.usecases.payment.CreatePaymentUseCase
 
 @Service
 class CreateOrderUseCase(
     private val orderGatewayInterface: OrderGatewayInterface,
     private val orderItemGatewayInterface: OrderItemGatewayInterface,
     private val productGatewayInterface: ProductGatewayInterface,
-    private val createPaymentUseCase: CreatePaymentUseCase,
+    // private val createPaymentUseCase: CreatePaymentUseCase,
 ) {
 
     fun execute(order: Order): Order {
@@ -31,8 +29,10 @@ class CreateOrderUseCase(
         }
 
         val orderWithItems = orderEntity.copy(orderItems = orderItemsWithProductInfo)
-        val paymentAssociation = createPaymentUseCase.execute(orderWithItems)
-        return orderWithItems.copy(payment = paymentAssociation)
+        //  val paymentAssociation = createPaymentUseCase.execute(orderWithItems)
+        return orderWithItems.copy(
+            //payment = paymentAssociation
+        )
     }
 
     private fun validateOrderItems(orderItems: List<OrderItem>) {

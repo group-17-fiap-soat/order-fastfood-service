@@ -25,6 +25,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://repo.spring.io/release") }
 }
 
 dependencies {
@@ -36,6 +37,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core:10.21.0")
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("com.mercadopago:sdk-java:2.1.29")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.1.1")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
@@ -61,5 +63,3 @@ allOpen {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
-

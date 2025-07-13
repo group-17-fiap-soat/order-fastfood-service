@@ -1,27 +1,14 @@
-CREATE
-EXTENSION IF NOT EXISTS "uuid-ossp";
-
+-- DDL script to create the FastFood database schema
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Sequence para o campo number da tabela Order
 CREATE SEQUENCE sq_order_number START WITH 1 INCREMENT BY 1;
-
-
--- Tabela Customer
-CREATE TABLE tb_customer
-(
-    id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    cpf        VARCHAR(11) UNIQUE NOT NULL,
-    name       TEXT               NOT NULL,
-    email      TEXT UNIQUE        NOT NULL,
-    created_at TIMESTAMPTZ      DEFAULT now(),
-    updated_at TIMESTAMPTZ      DEFAULT now()
-);
 
 -- Tabela Product
 CREATE TABLE tb_product
 (
     id          UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name        TEXT   NOT NULL,
+    name        TEXT    NOT NULL,
     description TEXT,
     price       NUMERIC NOT NULL,
     category    TEXT    NOT NULL,
@@ -35,7 +22,7 @@ CREATE TABLE tb_order
 (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     number        BIGINT NOT NULL,
-    customer_id   UUID REFERENCES tb_customer (id),
+    customer_id   UUID   NOT NULL,
     status        TEXT   NOT NULL,
     order_date    TIMESTAMPTZ      DEFAULT now(),
     finished_date TIMESTAMPTZ,
@@ -53,26 +40,9 @@ CREATE TABLE tb_order_item
     created_at TIMESTAMPTZ      DEFAULT now(),
     updated_at TIMESTAMPTZ      DEFAULT now()
 );
-
--- Tabela Payment
-CREATE TABLE tb_payment
-(
-    id             UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    order_id       UUID REFERENCES tb_order (id),
-    external_id    BIGINT NOT NULL,
-    payment_status TEXT NOT NULL,
-    total_amount   NUMERIC NOT NULL,
-    payment_method TEXT NOT NULL,
-    payment_date   TIMESTAMPTZ      DEFAULT now(),
-    created_at     TIMESTAMPTZ      DEFAULT now(),
-    updated_at     TIMESTAMPTZ      DEFAULT now()
-);
-
-
-
-
-
-CREATE OR REPLACE FUNCTION set_order_number()
+-- Trigger function to set the order number
+CREATE
+OR REPLACE FUNCTION set_order_number()
 RETURNS TRIGGER AS $$
 BEGIN
     NEW.number
