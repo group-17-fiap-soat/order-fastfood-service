@@ -9,6 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
+
 @OpenAPIDefinition(
     servers = [Server(url = "/", description = "Default Server URL")]
 )

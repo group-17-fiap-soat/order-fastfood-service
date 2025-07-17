@@ -1,25 +1,27 @@
 package tech.challenge.fastfood.fastfood.usecases.order
 
 import org.springframework.stereotype.Service
-import tech.challenge.fastfood.fastfood.adapters.clients.PaymentClient
+import tech.challenge.fastfood.fastfood.adapters.clients.PaymentApiClient
 import tech.challenge.fastfood.fastfood.common.enums.OrderStatusEnum
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderGatewayInterface
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderItemGatewayInterface
 import tech.challenge.fastfood.fastfood.entities.Order
+import tech.challenge.fastfood.fastfood.entities.PaymentAssociation
 
 @Service
 class ListOrderUseCase(
     private val orderGatewayInterface: OrderGatewayInterface,
     private val orderItemGatewayInterface: OrderItemGatewayInterface,
-    private val paymentClient: PaymentClient
+    private val paymentApiClient: PaymentApiClient
 ) {
     fun execute(): List<Order> {
         val orders = orderGatewayInterface.findAll()
         return orders.map { order ->
             val orderItems = orderItemGatewayInterface.findAllByOrderId(order.id!!)
-            val paymentAssociation = paymentClient.createPaymentByOrderId(order)
+            val payment= paymentApiClient.getPaymentByOrderId(order.id).first()
+
             order.copy(
-                orderItems = orderItems, payment = paymentAssociation
+                orderItems = orderItems, payment = PaymentAssociation(paymentData = payment)
             )
         }
             .filter { it.status != OrderStatusEnum.FINISHED }
