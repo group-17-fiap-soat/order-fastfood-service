@@ -17,7 +17,7 @@ class ListOrderUseCase(
         val orders = orderGatewayInterface.findAll()
         return orders.map { order ->
             val orderItems = orderItemGatewayInterface.findAllByOrderId(order.id!!)
-            val paymentAssociation = paymentApiClient.createPaymentByOrderId(order.id.toString())
+            val paymentAssociation = paymentApiClient.getPaymentByOrderId(order.id.toString())
             order.copy(
                 orderItems = orderItems, payment = paymentAssociation
             )
