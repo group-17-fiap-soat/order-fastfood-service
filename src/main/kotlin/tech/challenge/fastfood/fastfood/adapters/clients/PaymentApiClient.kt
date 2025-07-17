@@ -11,7 +11,7 @@ import tech.challenge.fastfood.fastfood.entities.PaymentAssociation
 import tech.challenge.fastfood.fastfood.entities.PaymentData
 import java.util.UUID
 
-@FeignClient(name = "paymentClient", url = "{payment-api.url}")
+@FeignClient(name = "paymentClient", url = "\${payment-api.url}")
 @Component
 interface PaymentApiClient {
     @PostMapping("/payments")
