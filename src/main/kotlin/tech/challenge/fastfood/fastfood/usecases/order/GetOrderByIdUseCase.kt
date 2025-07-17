@@ -6,6 +6,7 @@ import tech.challenge.fastfood.fastfood.adapters.clients.PaymentApiClient
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderGatewayInterface
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderItemGatewayInterface
 import tech.challenge.fastfood.fastfood.entities.Order
+import tech.challenge.fastfood.fastfood.entities.PaymentAssociation
 import java.util.*
 
 @Service
@@ -20,10 +21,10 @@ class GetOrderByIdUseCase(
             ?: throw EntityNotFoundException("Pedido com o id ${id} não encontrado")
 
         val orderItems = orderItemGatewayInterface.findAllByOrderId(order.id!!)
-        val paymentAssociation = paymentApiClient.getPaymentByOrderId(order.id.toString())
+        val payment = paymentApiClient.getPaymentByOrderId(order.id).first()
 
         return order.copy(
-            orderItems = orderItems, payment = paymentAssociation
+            orderItems = orderItems, payment = PaymentAssociation(paymentData = payment)
         )
     }
 }

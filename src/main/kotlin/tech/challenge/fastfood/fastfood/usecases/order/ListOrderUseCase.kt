@@ -6,6 +6,7 @@ import tech.challenge.fastfood.fastfood.common.enums.OrderStatusEnum
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderGatewayInterface
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderItemGatewayInterface
 import tech.challenge.fastfood.fastfood.entities.Order
+import tech.challenge.fastfood.fastfood.entities.PaymentAssociation
 
 @Service
 class ListOrderUseCase(
@@ -17,9 +18,10 @@ class ListOrderUseCase(
         val orders = orderGatewayInterface.findAll()
         return orders.map { order ->
             val orderItems = orderItemGatewayInterface.findAllByOrderId(order.id!!)
-            val paymentAssociation = paymentApiClient.getPaymentByOrderId(order.id.toString())
+            val payment= paymentApiClient.getPaymentByOrderId(order.id).first()
+
             order.copy(
-                orderItems = orderItems, payment = paymentAssociation
+                orderItems = orderItems, payment = PaymentAssociation(paymentData = payment)
             )
         }
             .filter { it.status != OrderStatusEnum.FINISHED }

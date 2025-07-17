@@ -5,8 +5,11 @@ import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import tech.challenge.fastfood.fastfood.entities.Order
 import tech.challenge.fastfood.fastfood.entities.PaymentAssociation
+import tech.challenge.fastfood.fastfood.entities.PaymentData
+import java.util.UUID
 
 @FeignClient(name = "paymentClient", url = "{payment-api.url}")
 @Component
@@ -15,5 +18,5 @@ interface PaymentApiClient {
     fun createPaymentAssociation(@RequestBody order: Order): PaymentAssociation?
 
     @GetMapping("/payments")
-    fun getPaymentByOrderId(orderId: String): PaymentAssociation?
+    fun getPaymentByOrderId(@RequestParam orderId: UUID): List<PaymentData>
 }
