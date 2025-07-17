@@ -20,7 +20,7 @@ class GetOrderByIdUseCase(
             ?: throw EntityNotFoundException("Pedido com o id ${id} não encontrado")
 
         val orderItems = orderItemGatewayInterface.findAllByOrderId(order.id!!)
-        val paymentAssociation = paymentClient.createPaymentByOrderId(order.id.toString())
+        val paymentAssociation = paymentClient.createPaymentByOrderId(order)
 
         return order.copy(
             orderItems = orderItems, payment = paymentAssociation

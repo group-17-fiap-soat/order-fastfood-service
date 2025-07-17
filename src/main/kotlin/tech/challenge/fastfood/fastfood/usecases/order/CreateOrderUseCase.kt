@@ -2,6 +2,7 @@ package tech.challenge.fastfood.fastfood.usecases.order
 
 import org.apache.coyote.BadRequestException
 import org.springframework.stereotype.Service
+import tech.challenge.fastfood.fastfood.adapters.clients.PaymentClient
 import tech.challenge.fastfood.fastfood.common.enums.OrderStatusEnum
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderGatewayInterface
 import tech.challenge.fastfood.fastfood.common.interfaces.gateway.OrderItemGatewayInterface
@@ -15,6 +16,7 @@ class CreateOrderUseCase(
     private val orderItemGatewayInterface: OrderItemGatewayInterface,
     private val productGatewayInterface: ProductGatewayInterface,
     // private val createPaymentUseCase: CreatePaymentUseCase,
+    private val paymentClient: PaymentClient,
 ) {
 
     fun execute(order: Order): Order {
@@ -29,9 +31,9 @@ class CreateOrderUseCase(
         }
 
         val orderWithItems = orderEntity.copy(orderItems = orderItemsWithProductInfo)
-        //  val paymentAssociation = createPaymentUseCase.execute(orderWithItems)
+          val paymentAssociation = paymentClient.createPaymentByOrderId(orderWithItems)
         return orderWithItems.copy(
-            //payment = paymentAssociation
+            payment = paymentAssociation
         )
     }
 
