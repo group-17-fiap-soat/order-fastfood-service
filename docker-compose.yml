@@ -18,6 +18,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    networks:
+      - fastfood-network
 
 volumes:
   postgres_data:

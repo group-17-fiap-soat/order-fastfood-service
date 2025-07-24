@@ -18,10 +18,10 @@ class ListOrderUseCase(
         val orders = orderGatewayInterface.findAll()
         return orders.map { order ->
             val orderItems = orderItemGatewayInterface.findAllByOrderId(order.id!!)
-            val payment= paymentApiClient.getPaymentByOrderId(order.id).first()
+            val payment = paymentApiClient.getPaymentByOrderId(order.id).firstOrNull()
 
             order.copy(
-                orderItems = orderItems, payment = PaymentAssociation(paymentData = payment)
+                orderItems = orderItems, payment = payment?.let { PaymentAssociation(paymentData = it) }
             )
         }
             .filter { it.status != OrderStatusEnum.FINISHED }

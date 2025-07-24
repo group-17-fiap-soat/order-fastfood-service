@@ -5,6 +5,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
     kotlin("plugin.jpa") version "1.9.25"
     id("org.flywaydb.flyway") version "10.21.0"
+    id("jacoco")
+    id("org.sonarqube") version "6.2.0.5505"
 }
 
 
@@ -45,7 +47,12 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
+    testImplementation("org.mockito:mockito-core:5.11.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.11.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("com.h2database:h2")
 }
 
 kotlin {
@@ -62,4 +69,32 @@ allOpen {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
+    }
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "order-fastfood")
+        property("sonar.projectName", "order-fastfood")
+        property("sonar.host.url", "http://localhost:9000")
+        property("sonar.login", "sqp_d468eff504dba386892e59b35fab199b14d5b3c5")
+        property("sonar.sources", "src/main/kotlin")
+        property("sonar.tests", "src/test/kotlin")
+        property("sonar.kotlin.coverage.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.sources", "src/main/kotlin/tech/challenge/fastfood/fastfood/usecases")
+        property("sonar.coverage.inclusions", "src/main/kotlin/tech/challenge/fastfood/fastfood/usecases/**/*.kt")
+        property("sonar.coverage.exclusions", "")
+    }
 }
