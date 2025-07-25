@@ -88,8 +88,8 @@ sonarqube {
     properties {
         property("sonar.projectKey", "order-fastfood")
         property("sonar.projectName", "order-fastfood")
-        property("sonar.host.url", "http://localhost:9000")
-        property("sonar.login", "sqp_d468eff504dba386892e59b35fab199b14d5b3c5")
+        property("sonar.host.url", "http://ec2-44-195-59-240.compute-1.amazonaws.com:9000/")
+        property("sonar.login", "sqp_10517f53a9423900e0373feeb8ad53edded8d007")
         property("sonar.sources", "src/main/kotlin")
         property("sonar.tests", "src/test/kotlin")
         property("sonar.kotlin.coverage.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
