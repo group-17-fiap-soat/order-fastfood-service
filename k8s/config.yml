@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: order-fastfood
-          image: order-fastfood:latest  # Local Docker image
-          imagePullPolicy: Never  # Use locally built image, don’t pull from a registry
+          image: order-fastfood:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
