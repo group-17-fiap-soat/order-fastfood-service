@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fastfood-app
+  name: order-fastfood-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fastfood-app
+      app: order-fastfood-app
   template:
     metadata:
       labels:
-        app: fastfood-app
+        app: order-fastfood-app
     spec:
       containers:
         - name: order-fastfood

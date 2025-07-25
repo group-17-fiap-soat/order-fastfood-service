@@ -9,7 +9,7 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_ACCOUNT: 361598269712
-  ECR_REPOSITORY: tech-challenge-fastfood
+  ECR_REPOSITORY: order-fastfood
   CLUSTER_NAME: fastfood-app-eks
   IMAGE_TAG: ${{ github.sha }}
 
