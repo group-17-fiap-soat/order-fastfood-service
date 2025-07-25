@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: order-fastfood
-          image: 361598269712.dkr.ecr.us-east-1.amazonaws.com/tech-challenge-fastfood:latest
+          image: 361598269712.dkr.ecr.us-east-1.amazonaws.com/order-fastfood:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -82,7 +82,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: fiap-soat-seventeen-fastfood-service.com
+    - host: fiap-soat-seventeen-order-fastfood-service.com
       http:
         paths:
           - path: /
