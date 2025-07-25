@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableJpaRepositories
 @EnableTransactionManagement
 @EnableFeignClients
-class FastfoodApplication
+class OrderFastfoodApplication
 
 fun main(args: Array<String>) {
-    runApplication<FastfoodApplication>(*args)
+    runApplication<OrderFastfoodApplication>(*args)
 }

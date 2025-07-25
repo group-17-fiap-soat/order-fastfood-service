@@ -1,5 +1,6 @@
 -- DDL script to create the FastFood database schema
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE
+EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Sequence para o campo number da tabela Order
 CREATE SEQUENCE sq_order_number START WITH 1 INCREMENT BY 1;
@@ -22,7 +23,7 @@ CREATE TABLE tb_order
 (
     id            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     number        BIGINT NOT NULL,
-    customer_id   UUID   NOT NULL,
+    customer_id   UUID NULL,
     status        TEXT   NOT NULL,
     order_date    TIMESTAMPTZ      DEFAULT now(),
     finished_date TIMESTAMPTZ,
