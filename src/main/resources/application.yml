@@ -44,4 +44,4 @@ application-version: "1.0.1"
 server:
   port: 8080
 payment-api:
-  url: http://localhost:8083/api
+  url: a64469f67337344efa6b6fa8f3b526ab-123839730.us-east-1.elb.amazonaws.com/api
