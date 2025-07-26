@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import tech.challenge.fastfood.fastfood.entities.Order
 import tech.challenge.fastfood.fastfood.entities.PaymentAssociation
-import tech.challenge.fastfood.fastfood.entities.PaymentData
-import java.util.UUID
+import java.util.*
 
 @FeignClient(name = "paymentClient", url = "\${payment-api.url}")
 @Component
