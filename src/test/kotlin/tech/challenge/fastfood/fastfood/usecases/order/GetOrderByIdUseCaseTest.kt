@@ -50,10 +50,11 @@ class GetOrderByIdUseCaseTest {
         val order = fakeOrder()
         val orderItems = listOf(fakeOrderItem())
         val paymentData = fakePaymentData()
+        val paymentAssociation = PaymentAssociation(paymentData = paymentData)
 
         whenever(orderGateway.findById(orderId)).thenReturn(order)
         whenever(orderItemGateway.findAllByOrderId(orderId)).thenReturn(orderItems)
-        whenever(paymentApiClient.getPaymentByOrderId(orderId)).thenReturn(listOf(paymentData))
+        whenever(paymentApiClient.getPaymentByOrderId(orderId)).thenReturn(listOf(paymentAssociation))
 
         val result = useCase.execute(orderId)
 

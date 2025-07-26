@@ -21,7 +21,8 @@ class ListOrderUseCase(
             val payment = paymentApiClient.getPaymentByOrderId(order.id).firstOrNull()
 
             order.copy(
-                orderItems = orderItems, payment = payment?.let { PaymentAssociation(paymentData = it) }
+                orderItems = orderItems,
+                payment = payment
             )
         }
             .filter { it.status != OrderStatusEnum.FINISHED }

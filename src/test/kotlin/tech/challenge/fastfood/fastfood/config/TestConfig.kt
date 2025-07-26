@@ -17,13 +17,15 @@ class TestConfig {
     @Primary
     fun mockPaymentApiClient(): PaymentApiClient {
         return object : PaymentApiClient {
-            override fun getPaymentByOrderId(orderId: UUID): List<PaymentData> {
-                val paymentData = PaymentData(
-                    id = UUID.randomUUID(),
-                    orderId = orderId,
-                    totalAmount = BigDecimal.TEN,
-                    paymentMethod = "PIX",
-                    paymentStatus = PaymentStatusEnum.PAYMENT_PENDING
+            override fun getPaymentByOrderId(orderId: UUID): List<PaymentAssociation> {
+                val paymentData = PaymentAssociation(
+                    paymentData = PaymentData(
+                        id = UUID.randomUUID(),
+                        orderId = orderId,
+                        totalAmount = BigDecimal.TEN,
+                        paymentMethod = "PIX",
+                        paymentStatus = PaymentStatusEnum.PAYMENT_PENDING
+                    )
                 )
                 return listOf(paymentData)
             }

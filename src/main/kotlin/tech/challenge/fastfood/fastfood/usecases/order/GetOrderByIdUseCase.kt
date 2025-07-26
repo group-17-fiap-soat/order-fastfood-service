@@ -24,7 +24,7 @@ class GetOrderByIdUseCase(
         val payment = paymentApiClient.getPaymentByOrderId(order.id).first()
 
         return order.copy(
-            orderItems = orderItems, payment = PaymentAssociation(paymentData = payment)
+            orderItems = orderItems, payment = payment
         )
     }
 }

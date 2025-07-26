@@ -29,10 +29,30 @@ class ListOrderUseCaseTest {
         val order1 = Order(orderId1, status = OrderStatusEnum.PENDING_AUTHORIZATION, orderItems = emptyList())
         val order2 = Order(orderId2, status = OrderStatusEnum.IN_PROGRESS, orderItems = emptyList())
         val order3 = Order(UUID.randomUUID(), status = OrderStatusEnum.FINISHED, orderItems = emptyList())
-        val orderItem1 = OrderItem(UUID.randomUUID(), Product(UUID.randomUUID(), "Coca", "", BigDecimal.TEN), 1, orderId1)
-        val orderItem2 = OrderItem(UUID.randomUUID(), Product(UUID.randomUUID(), "Batata", "", BigDecimal.ONE), 2, orderId2)
-        val payment1 = PaymentData(UUID.randomUUID(), 1L, orderId1, BigDecimal.TEN, "PIX", paymentStatus = PaymentStatusEnum.PAYMENT_APPROVED)
-        val payment2 = PaymentData(UUID.randomUUID(), 2L, orderId2, BigDecimal.ONE, "PIX", paymentStatus = PaymentStatusEnum.PAYMENT_APPROVED)
+        val orderItem1 =
+            OrderItem(UUID.randomUUID(), Product(UUID.randomUUID(), "Coca", "", BigDecimal.TEN), 1, orderId1)
+        val orderItem2 =
+            OrderItem(UUID.randomUUID(), Product(UUID.randomUUID(), "Batata", "", BigDecimal.ONE), 2, orderId2)
+        val payment1 = PaymentAssociation(
+            paymentData = PaymentData(
+                UUID.randomUUID(),
+                1L,
+                orderId1,
+                BigDecimal.TEN,
+                "PIX",
+                paymentStatus = PaymentStatusEnum.PAYMENT_APPROVED
+            )
+        )
+        val payment2 = PaymentAssociation(
+            paymentData = PaymentData(
+                UUID.randomUUID(),
+                2L,
+                orderId2,
+                BigDecimal.ONE,
+                "PIX",
+                paymentStatus = PaymentStatusEnum.PAYMENT_APPROVED
+            )
+        )
         whenever(orderGateway.findAll()).thenReturn(listOf(order1, order2, order3))
         whenever(orderItemGateway.findAllByOrderId(orderId1)).thenReturn(listOf(orderItem1))
         whenever(orderItemGateway.findAllByOrderId(orderId2)).thenReturn(listOf(orderItem2))
@@ -46,8 +66,8 @@ class ListOrderUseCaseTest {
         assertEquals(OrderStatusEnum.PENDING_AUTHORIZATION, result[1].status)
         assertEquals(listOf(orderItem2), result[0].orderItems)
         assertEquals(listOf(orderItem1), result[1].orderItems)
-        assertEquals(payment2, result[0].payment?.paymentData)
-        assertEquals(payment1, result[1].payment?.paymentData)
+        assertEquals(payment2, result[0].payment)
+        assertEquals(payment1, result[1].payment)
         assertTrue(result.none { it.status == OrderStatusEnum.FINISHED })
         verify(orderGateway).findAll()
         verify(orderItemGateway).findAllByOrderId(orderId1)

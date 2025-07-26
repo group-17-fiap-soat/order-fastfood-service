@@ -18,5 +18,5 @@ interface PaymentApiClient {
     fun createPaymentAssociation(@RequestBody order: Order): PaymentAssociation?
 
     @GetMapping("/payments")
-    fun getPaymentByOrderId(@RequestParam orderId: UUID): List<PaymentData>
+    fun getPaymentByOrderId(@RequestParam orderId: UUID): List<PaymentAssociation>
 }
