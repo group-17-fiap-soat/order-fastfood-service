@@ -97,11 +97,17 @@ sonarqube {
         property("sonar.projectName", "order-fastfood")
         property("sonar.host.url", "http://ec2-44-195-59-240.compute-1.amazonaws.com:9000/")
         property("sonar.login", "sqp_10517f53a9423900e0373feeb8ad53edded8d007")
-        property("sonar.sources", "src/main/kotlin")
-        property("sonar.tests", "src/test/kotlin")
-        property("sonar.kotlin.coverage.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+
         property("sonar.sources", "src/main/kotlin/tech/challenge/fastfood/fastfood/usecases")
         property("sonar.coverage.inclusions", "src/main/kotlin/tech/challenge/fastfood/fastfood/usecases/**/*.kt")
-        property("sonar.coverage.exclusions", "")
+        property("sonar.tests", "src/test/kotlin")
+
+        property("sonar.kotlin.coverage.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+        property("sonar.scanner.metadataFilePath", file("${layout.buildDirectory}/sonar/report-task.txt").absolutePath)
+
+        property("sonar.coverage.exclusions", "**/src/test/**, **/*Test.kt")
+        property("sonar.exclusions", "**/test/**, **/*Test.kt")
+
+
     }
 }
