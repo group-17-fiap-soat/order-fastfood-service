@@ -1,4 +1,4 @@
-name: Sonar Analysis
+name: Sonar Quality Gate Analysis
 
 on:
   pull_request:
